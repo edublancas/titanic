@@ -1,0 +1,23 @@
+; Combine raw data in a single file
+data/combined.csv <- raw_data/test.csv, raw_data/train.csv
+  python pipeline/combine_raw_data.py
+
+; Fill NAs in some columns
+data/combined_clean.csv <- data/combined.csv
+  python pipeline/fill_nas.py
+
+; Perform feature extraction
+data/combined_with_features.csv <- data/combined_clean.csv
+  python pipeline/feature_extraction.py
+
+; Prepare for training
+data/train.csv, data/test.csv <- data/combined_with_features.csv
+  python pipeline/prepare_for_training.py
+
+; Train model
+output/Titanic_Evaluate_Tuned_train_train.csv_test_test.csv_RandomForestClassifier.predictions <- data/train.csv, data/test.csv
+  run_experiment experiment.cfg
+
+; Put to kaggle format
+kaggle.csv <- output/Titanic_Evaluate_Tuned_train_train.csv_test_test.csv_RandomForestClassifier.predictions
+  python pipeline/kaggle_format.py
