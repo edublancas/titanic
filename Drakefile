@@ -15,9 +15,5 @@ data/train.csv, data/test.csv <- data/combined_with_features.csv
   python pipeline/prepare_for_training.py
 
 ; Train model
-output/Titanic_Evaluate_Tuned_train_train.csv_test_test.csv_RandomForestClassifier.predictions <- data/train.csv, data/test.csv
-  run_experiment experiment.cfg
-
-; Put to kaggle format
-kaggle.csv <- output/Titanic_Evaluate_Tuned_train_train.csv_test_test.csv_RandomForestClassifier.predictions
-  python pipeline/kaggle_format.py
+predictions.csv <- data/train.csv, data/test.csv
+  python pipeline/training.py

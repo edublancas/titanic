@@ -1,0 +1,6 @@
+conf:
+  path: 'db.json'
+  uri: 'mongodb://logger:hNLQo7ZUZqAUhCCDTQ2E@ds035553.mongolab.com:35553/models'
+  db: 'models'
+  collection: 'exp'
+backend: 'mongo'

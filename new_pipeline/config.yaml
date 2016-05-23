@@ -1,0 +1,24 @@
+load:
+  key: value
+
+model_iterator:
+  sklearn_models:
+    - sklearn.ensemble.RandomForestClassifier
+    - sklearn.ensemble.AdaBoostClassifier
+    - sklearn.linear_model.LogisticRegression
+    - sklearn.ensemble.ExtraTreesClassifier
+    - sklearn.ensemble.GradientBoostingClassifier
+  grid_size: medium
+  feature_percentiles:
+    - 50
+    - 60
+    - 70
+    - 80
+    - 90
+    - 100
+
+train:
+  n_jobs: -1
+
+finalize:
+  exp_name: stuff

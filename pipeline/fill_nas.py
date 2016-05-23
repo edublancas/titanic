@@ -19,5 +19,7 @@ df['age'] = df.apply(estimate_age, axis=1)
 df.loc[62,'embarked'] = 'S'
 df.loc[830,'embarked'] = 'S'
 
+df.cabin[df.cabin.isnull()] = 'U'
+
 #Write to csv
 df.to_csv('data/combined_clean.csv')
