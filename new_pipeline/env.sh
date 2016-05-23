@@ -1,1 +1,1 @@
-export ROOT_FOLDER='/Users/Edu/development/open-source/dstools/usage/pipeline'
+export ROOT_FOLDER='/Users/Edu/Development/ds/titanic/new_pipeline'

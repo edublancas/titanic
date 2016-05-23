@@ -1,5 +1,5 @@
 from dstools.pipeline import Pipeline
-from dstools.util import config, load_yaml
+from dstools.util import config, load_yaml, instantiate_from_class_str
 from dstools.sklearn.util import model_name
 from dstools.sklearn import grid_generator
 from dstools.lab.util import top_k
@@ -49,8 +49,16 @@ def model_iterator(config):
     return all_models
 
 
-def train(config, model, data, record):
-    model, percentile = model
+def model_iterator_autosklearn(config):
+    models = ['autosklearn.classification.AutoSklearnClassifier']
+    percentiles = config['feature_percentiles']
+    all_models = list(product(models, percentiles))
+    return all_models
+
+
+def train(config, model_data, data, record):
+    model_class_name, percentile = model_data
+    model = instantiate_from_class_str(model_class_name)
 
     try:
         model.n_jobs = config['n_jobs']
@@ -90,13 +98,14 @@ def train(config, model, data, record):
 
 
 def finalize(config, experiment):
-    experiment.records = top_k(experiment.records, 'mean_acc', 10)
+    experiment.records = top_k(experiment.records, 'mean_acc', 30)
     experiment['exp_name'] = config['exp_name']
 
-pip = Pipeline(config, load_yaml('exp.yaml'), workers=10, save=True)
+pip = Pipeline(config, load_yaml('exp.yaml'), workers=4, save=True)
 
 pip.load = load
-pip.model_iterator = model_iterator
+# pip.model_iterator = model_iterator
+pip.model_iterator = model_iterator_autosklearn
 pip.train = train
 pip.finalize = finalize
 
