@@ -1,5 +1,5 @@
 from dstools.pipeline import Pipeline
-from dstools.util import config, load_yaml, instantiate_from_class_str
+from dstools.util import config, load_yaml, instantiate_from_class_string
 from dstools.sklearn.util import model_name
 from dstools.sklearn import grid_generator
 from dstools.lab.util import top_k
@@ -58,7 +58,7 @@ def model_iterator_autosklearn(config):
 
 def train(config, model_data, data, record):
     model_class_name, percentile = model_data
-    model = instantiate_from_class_str(model_class_name)
+    model = instantiate_from_class_string(model_class_name)
 
     try:
         model.n_jobs = config['n_jobs']
